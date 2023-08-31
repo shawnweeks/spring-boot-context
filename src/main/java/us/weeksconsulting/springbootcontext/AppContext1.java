@@ -9,15 +9,15 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({
-        AppComponent.class,
-        AppComponentInside.class
+        RestController1.class
 })
 public class AppContext1 {
     private final static Logger LOGGER = LoggerFactory.getLogger(AppContext1.class);
 
     @Bean
     @Qualifier("localContext")
-    String getAppName() {        
+    String getAppName() {
+        LOGGER.info("getAppName");
         return "App1";
     };
 }

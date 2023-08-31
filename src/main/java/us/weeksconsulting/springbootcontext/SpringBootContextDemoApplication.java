@@ -1,18 +1,14 @@
 package us.weeksconsulting.springbootcontext;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import static org.springframework.boot.WebApplicationType.NONE;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Import;
+import org.springframework.boot.SpringApplication;
 
-@SpringBootApplication
+@EnableAutoConfiguration
+@Import({ GlobalContext.class })
 public class SpringBootContextDemoApplication {
 
-	public static void main(String[] args) {
-		new SpringApplicationBuilder()
-				.sources(GlobalContext.class).web(NONE)
-				.child(AppContext1.class).web(NONE)
-				.child(AppContext2.class).web(NONE)
-				.run(args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootContextDemoApplication.class, args);
+    }
 }
