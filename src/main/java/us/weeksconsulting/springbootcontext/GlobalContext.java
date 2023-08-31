@@ -30,8 +30,7 @@ public class GlobalContext {
         applicationContext.register(AppContext1.class);
         applicationContext.refresh();
         dispatcherServlet.setApplicationContext(applicationContext);
-        ServletRegistrationBean<DispatcherServlet> servletRegistrationBean = new ServletRegistrationBean<>(dispatcherServlet, true,
-                "/app1/*");
+        ServletRegistrationBean<DispatcherServlet> servletRegistrationBean = new ServletRegistrationBean<>(dispatcherServlet, true,"/app1/*");
         servletRegistrationBean.setName("app1");
         servletRegistrationBean.setLoadOnStartup(1);
         return servletRegistrationBean;
@@ -46,9 +45,7 @@ public class GlobalContext {
         applicationContext.register(AppContext2.class);
         applicationContext.refresh();
         dispatcherServlet.setApplicationContext(applicationContext);
-        ServletRegistrationBean<DispatcherServlet> servletRegistrationBean = new ServletRegistrationBean<>(
-                dispatcherServlet, true,
-                "/app2/*");
+        ServletRegistrationBean<DispatcherServlet> servletRegistrationBean = new ServletRegistrationBean<>(dispatcherServlet, true,"/app2/*");
         servletRegistrationBean.setName("app2");
         servletRegistrationBean.setLoadOnStartup(1);
         return servletRegistrationBean;
