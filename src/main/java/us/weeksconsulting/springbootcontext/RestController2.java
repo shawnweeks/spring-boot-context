@@ -22,6 +22,6 @@ public class RestController2 {
     @GetMapping("/name")
     public String getName() {
         LOGGER.info("getName");
-        return String.format("<globalContext: %s localContext: %s>", globalName, localName);
+        return String.format("<h1>globalContext: %s localContext: %s</h1>", globalName, localName);
     }
 }

@@ -7,10 +7,18 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 @Configuration
+@EnableWebSecurity
 public class GlobalContext {
     private final static Logger LOGGER = LoggerFactory.getLogger(GlobalContext.class);
 
@@ -22,6 +30,28 @@ public class GlobalContext {
     };
 
     @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests((requests) -> requests
+                        .anyRequest().authenticated())
+                .formLogin().and()
+                .logout((logout) -> logout.permitAll());
+
+        return http.build();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("password")
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(user);
+    }
+
+    @Bean
     public ServletRegistrationBean<DispatcherServlet> app1(ApplicationContext parentContext) {
         DispatcherServlet dispatcherServlet = new DispatcherServlet();
         dispatcherServlet.setDetectAllHandlerMappings(false);
@@ -30,7 +60,8 @@ public class GlobalContext {
         applicationContext.register(AppContext1.class);
         applicationContext.refresh();
         dispatcherServlet.setApplicationContext(applicationContext);
-        ServletRegistrationBean<DispatcherServlet> servletRegistrationBean = new ServletRegistrationBean<>(dispatcherServlet, true,"/*");
+        ServletRegistrationBean<DispatcherServlet> servletRegistrationBean = new ServletRegistrationBean<>(
+                dispatcherServlet, true, "/*");
         servletRegistrationBean.setName("app1");
         servletRegistrationBean.setLoadOnStartup(1);
         return servletRegistrationBean;
@@ -45,7 +76,8 @@ public class GlobalContext {
         applicationContext.register(AppContext2.class);
         applicationContext.refresh();
         dispatcherServlet.setApplicationContext(applicationContext);
-        ServletRegistrationBean<DispatcherServlet> servletRegistrationBean = new ServletRegistrationBean<>(dispatcherServlet, true,"/app2/*");
+        ServletRegistrationBean<DispatcherServlet> servletRegistrationBean = new ServletRegistrationBean<>(
+                dispatcherServlet, true, "/app2/*");
         servletRegistrationBean.setName("app2");
         servletRegistrationBean.setLoadOnStartup(1);
         return servletRegistrationBean;
