@@ -9,8 +9,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AppComponent {
-    private final static Logger LOGGER = LoggerFactory.getLogger(AppComponent.class);
+public class AppComponentInside {
+    private final static Logger LOGGER = LoggerFactory.getLogger(AppComponentInside.class);
 
     @Autowired
     @Qualifier("globalContext")
@@ -19,9 +19,6 @@ public class AppComponent {
     @Autowired
     @Qualifier("localContext")
     String localName;
-
-    @Autowired
-    AppComponentInside appComponentInside;
 
     @EventListener(ApplicationReadyEvent.class)
     public void doSomethingAfterStartup() {

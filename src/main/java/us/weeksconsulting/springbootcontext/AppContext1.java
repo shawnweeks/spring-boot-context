@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({
-        AppComponent.class
+        AppComponent.class,
+        AppComponentInside.class
 })
 public class AppContext1 {
     private final static Logger LOGGER = LoggerFactory.getLogger(AppContext1.class);
