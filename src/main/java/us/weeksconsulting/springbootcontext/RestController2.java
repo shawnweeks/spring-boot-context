@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,7 @@ public class RestController2 {
     @GetMapping("/name")
     public String getName() {
         LOGGER.info("getName");
+        LOGGER.info("{}", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return String.format("<h1>globalContext: %s localContext: %s</h1>", globalName, localName);
     }
 }
