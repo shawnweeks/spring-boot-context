@@ -30,7 +30,7 @@ public class GlobalContext {
         applicationContext.register(AppContext1.class);
         applicationContext.refresh();
         dispatcherServlet.setApplicationContext(applicationContext);
-        ServletRegistrationBean<DispatcherServlet> servletRegistrationBean = new ServletRegistrationBean<>(dispatcherServlet, true,"/app1/*");
+        ServletRegistrationBean<DispatcherServlet> servletRegistrationBean = new ServletRegistrationBean<>(dispatcherServlet, true,"/*");
         servletRegistrationBean.setName("app1");
         servletRegistrationBean.setLoadOnStartup(1);
         return servletRegistrationBean;
