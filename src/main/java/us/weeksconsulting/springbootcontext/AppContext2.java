@@ -17,6 +17,7 @@ public class AppContext2 {
     @Bean
     @Qualifier("localContext")
     String getAppName() {
+        LOGGER.info("getAppName");
         return "App2";
     };
 }
